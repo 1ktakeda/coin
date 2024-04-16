@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Coin Toss Animation</title>
+<style>
+.coin {
+  width: 500px;
+  height: 500px;
+  background: url(tails.png) no-repeat center / 100% auto;
+  position: relative;
+  cursor: pointer;
+}
+
+.coin.toss {
+  animation: toss 0.3s linear infinite, toss2 0.3s infinite steps(1, end), updown 2s ease;
+}
+
+@keyframes toss {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(360deg); }
+}
+
+@keyframes toss2 {
+  25% { background-image: url(tails.png); }
+  75% { background-image: url(heads.jpg); }
+}
+
+@keyframes updown {
+  0% { top: 0; }
+  50% { top: -100px; }
+  100% { top: 0; }
+}
+</style>
+</head>
+<body>
+<div class="coin"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(function(){
+  $('.coin').not(':animated').on('click', function(){
+    var rndm = Math.floor(Math.random() * 2);
+    $(this).addClass('toss');
+    setTimeout(function(){
+      $('.coin').removeClass('toss');
+      if (rndm === 1) {
+        $('.coin').css('background-image', 'url(tails.png)');
+      } else {
+        $('.coin').css('background-image', 'url(heads.jpg)');
+      }
+    }, 1900);
+  });
+});
+</script>
+</body>
+</html>
